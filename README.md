@@ -35,8 +35,8 @@ The operational EndFare Flights core runs over standard REST conventions. All re
 | `POST` | `/v1/flights/fare` | Retrieve granular pricing breakdowns, surcharges, and bag rules. |
 | `POST` | `/v1/flights/validate-fare` | Re-verify ticket availability immediately prior to calling the banking gate. |
 | `POST` | `/v1/flights/generate-pnr` | Initialize binding ticket issuance and generate GDS records instantly. |
-| `POST` | `/v1/flights/refund-quote` | Fetch dynamic programmatic cancellation breakdowns and refund options. |
-| `POST` | `/v1/flights/cancel` | Process immediate itinerary voids and cancellation sequences. |
+| `GET` | `/v1/flights/refund-quote` | Fetch dynamic programmatic cancellation breakdowns and refund options. |
+| `GET` | `/v1/flights/cancel` | Process immediate itinerary voids and cancellation sequences. |
 
 ---
 
