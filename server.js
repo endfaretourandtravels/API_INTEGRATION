@@ -4,7 +4,7 @@ const path = require('path');
 const { exec } = require('child_process');
 const { searchFlights, quoteFare, validateFare, issueTicket } = require('./src/flights');
 const { searchHotels } = require('./src/hotels');
-const { CREDENTIALS_PATH, CONFIG_DIR, ensureCredentialsFile } = require('./src/config');
+const { CREDENTIALS_PATH, CONFIG_DIR, ensureCredentialsFile, validateBaseUrl } = require('./src/config');
 const { IS_SEA } = require('./src/paths');
 
 const PORT = Number(process.env.PORT) || 3000;
@@ -66,6 +66,31 @@ async function handleApi(req, res, handler) {
   }
 }
 
+function validateBrowserApiRequest(req, res) {
+  const origin = req.headers.origin;
+  if (origin) {
+    let originUrl;
+    try {
+      originUrl = new URL(origin);
+    } catch {
+      sendJson(res, 403, { message: 'Invalid request origin' });
+      return false;
+    }
+
+    if (originUrl.protocol !== 'http:' || originUrl.host !== req.headers.host) {
+      sendJson(res, 403, { message: 'Cross-origin API requests are not allowed' });
+      return false;
+    }
+  }
+
+  if (req.method === 'POST' && req.headers['content-type']?.split(';', 1)[0].trim().toLowerCase() !== 'application/json') {
+    sendJson(res, 415, { message: 'Content-Type must be application/json' });
+    return false;
+  }
+
+  return true;
+}
+
 function readCredentialsFile() {
   try {
     return JSON.parse(fs.readFileSync(CREDENTIALS_PATH, 'utf8'));
@@ -95,15 +120,11 @@ async function handleSettings(req, res) {
       const input = JSON.parse((await readBody(req)) || '{}');
       const current = readCredentialsFile();
       const updated = {
-        baseUrl: String(input.baseUrl || current.baseUrl || '').trim(),
+        baseUrl: validateBaseUrl(String(input.baseUrl || current.baseUrl || '').trim()),
         clientId: String(input.clientId || '').trim(),
-        // Blank secret keeps the existing one.
         clientSecret: String(input.clientSecret || '').trim() || current.clientSecret || '',
       };
 
-      if (!/^https?:\/\//i.test(updated.baseUrl)) {
-        return sendJson(res, 400, { message: 'Base URL must start with http:// or https://' });
-      }
       if (!updated.clientId) return sendJson(res, 400, { message: 'Client ID is required' });
       if (!updated.clientSecret) return sendJson(res, 400, { message: 'Client Secret is required' });
 
@@ -308,6 +329,7 @@ function exitAfterKeypress(code) {
 
 const server = http.createServer((req, res) => {
   const { pathname } = new URL(req.url, `http://${req.headers.host}`);
+  if (pathname.startsWith('/api/') && !validateBrowserApiRequest(req, res)) return;
   if (pathname === '/api/settings') return handleSettings(req, res);
   if (pathname === '/api/branding') return handleBranding(req, res);
   if (pathname === '/branding/logo') return serveLogo(res);
