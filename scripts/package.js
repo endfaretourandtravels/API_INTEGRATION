@@ -73,7 +73,7 @@ async function main() {
         CompanyName: "EndFare Tour & Travel's",
         OriginalFilename: exeName,
         InternalName: releaseName,
-        LegalCopyright: '',
+        LegalCopyright: 'All rights reserved to EndFare Tour and Travels',
       },
     });
   }
