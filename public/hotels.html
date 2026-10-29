@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hotels | EndFare Tour &amp; Travel's API Demo</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="navbar">
+    <a href="index.html" class="brand">
+      <img class="brand-logo" alt="Logo" hidden />
+      <span class="brand-icon">✈</span>
+      <span class="brand-name">EndFare Tour &amp; Travel's</span>
+      <span class="brand-sub">API Demo</span>
+    </a>
+    <nav>
+      <a href="settings.html" class="settings-link" title="Settings" aria-label="Settings">⚙️</a>
+      <a href="index.html">Home</a>
+      <a href="flights.html">Flights</a>
+      <a href="hotels.html" class="active">Hotels</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1 class="page-title">Hotel Search</h1>
+
+    <form id="search-form" class="search-form" data-endpoint="/api/hotel/search" data-kind="hotel">
+      <label>City<input name="city" value="Mumbai" required /></label>
+      <label>Check-in<input type="date" name="checkIn" value="2026-11-15" required /></label>
+      <label>Check-out<input type="date" name="checkOut" value="2026-11-17" required /></label>
+      <label>Rooms<input type="number" name="rooms" value="1" min="1" max="9" data-type="number" /></label>
+      <label>Adults / room<input type="number" name="adults" value="2" min="1" max="9" data-type="number" /></label>
+      <label>Children / room<input type="number" name="children" value="0" min="0" max="9" data-type="number" /></label>
+      <label>Currency<input name="currency" value="INR" maxlength="3" /></label>
+      <button type="submit" class="btn">Search Hotels</button>
+    </form>
+
+    <section class="results">
+      <div class="panel">
+        <h3>Request</h3>
+        <pre id="request-view">—</pre>
+      </div>
+      <div class="panel">
+        <h3>Response <span id="status" class="status"></span></h3>
+        <pre id="response-view">Submit the form to call the API.</pre>
+      </div>
+    </section>
+  </main>
+
+  <footer>Powered by EndFare Tour &amp; Travel's API</footer>
+  <script src="brand.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

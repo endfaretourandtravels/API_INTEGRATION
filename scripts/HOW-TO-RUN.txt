@@ -1,0 +1,33 @@
+EndFare Tour & Travel's API Demo
+================================
+
+No installation needed.
+
+HOW TO RUN
+----------
+1. Double-click EndFareDemo.exe
+2. The demo opens automatically in Google Chrome (or your default browser
+   if Chrome isn't installed). If it doesn't, open http://localhost:3000.
+3. Keep the black console window open while using the demo.
+   Close it to stop the demo.
+
+FIRST-TIME SETUP
+----------------
+1. Click the gear icon (Settings) at the top-right.
+2. Enter your Client ID and Client Secret, then click "Save Credentials".
+3. Optional: enter your company name and upload your logo, then click "Save Branding".
+4. Go to Flights or Hotels and try a search.
+
+YOUR DATA
+---------
+Your credentials and branding are saved in the "config" folder next to
+EndFareDemo.exe on your computer. They are never sent anywhere except to the
+EndFare API when you run a search.
+
+To move the demo to another computer, copy the whole folder including "config".
+
+WINDOWS SECURITY WARNING
+------------------------
+If Windows shows "Windows protected your PC", click "More info" then "Run anyway".
+If Windows Firewall asks for access, you can click "Cancel" - the demo only runs
+on your own computer.

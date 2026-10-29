@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EndFare Tour &amp; Travel's API Demo</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="navbar">
+    <a href="index.html" class="brand">
+      <img class="brand-logo" alt="Logo" hidden />
+      <span class="brand-icon">✈</span>
+      <span class="brand-name">EndFare Tour &amp; Travel's</span>
+      <span class="brand-sub">API Demo</span>
+    </a>
+    <nav>
+      <a href="settings.html" class="settings-link" title="Settings" aria-label="Settings">⚙️</a>
+      <a href="index.html" class="active">Home</a>
+      <a href="flights.html">Flights</a>
+      <a href="hotels.html">Hotels</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Travel APIs, made simple</h1>
+      <p>Explore EndFare Tour &amp; Travel's Flight and Hotel APIs with live requests from this demo.</p>
+      <div class="hero-actions">
+        <a href="flights.html" class="btn">Search Flights</a>
+        <a href="hotels.html" class="btn btn-outline">Search Hotels</a>
+      </div>
+    </section>
+
+    <section class="cards">
+      <a href="flights.html" class="card">
+        <div class="card-icon">✈️</div>
+        <h2>Flight API</h2>
+        <p>Search one-way and return flights by origin, destination, dates, passengers and cabin class.</p>
+        <code>POST /v1/flight/search</code>
+      </a>
+      <a href="hotels.html" class="card">
+        <div class="card-icon">🏨</div>
+        <h2>Hotel API</h2>
+        <p>Find hotels by city, check-in / check-out dates and room occupancy.</p>
+        <code>POST /v1/hotel/search</code>
+      </a>
+    </section>
+
+    <section class="info">
+      <h3>Authentication</h3>
+      <p>Requests are sent with <code>x-client-id</code> and <code>x-client-secret</code> headers.
+        Update them any time in <code>config/credentials.json</code> &mdash; no rebuild required.</p>
+    </section>
+  </main>
+
+  <footer>Powered by EndFare Tour &amp; Travel's API</footer>
+  <script src="brand.js"></script>
+</body>
+</html>

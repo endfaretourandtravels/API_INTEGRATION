@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Settings | EndFare Tour &amp; Travel's API Demo</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="navbar">
+    <a href="index.html" class="brand">
+      <img class="brand-logo" alt="Logo" hidden />
+      <span class="brand-icon">✈</span>
+      <span class="brand-name">EndFare Tour &amp; Travel's</span>
+      <span class="brand-sub">API Demo</span>
+    </a>
+    <nav>
+      <a href="settings.html" class="settings-link active" title="Settings" aria-label="Settings">⚙️</a>
+      <a href="index.html">Home</a>
+      <a href="flights.html">Flights</a>
+      <a href="hotels.html">Hotels</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1 class="page-title">Settings</h1>
+
+    <h2 class="section-title">🔑 API Credentials</h2>
+    <form id="settings-form" class="settings-form" autocomplete="off">
+      <label>Base URL
+        <input name="baseUrl" type="url" required />
+      </label>
+      <label>Client ID <small>(x-client-id)</small>
+        <input name="clientId" required />
+      </label>
+      <label>Client Secret <small>(x-client-secret)</small>
+        <div class="secret-row">
+          <input name="clientSecret" type="password" />
+          <button type="button" id="toggle-secret" class="btn btn-light">Show</button>
+        </div>
+        <small id="secret-hint" class="hint"></small>
+      </label>
+      <div class="form-actions">
+        <button type="submit" class="btn">Save Credentials</button>
+        <span id="message" class="message"></span>
+      </div>
+    </form>
+
+    <h2 class="section-title">🎨 Branding</h2>
+    <form id="branding-form" class="settings-form" autocomplete="off">
+      <label>Brand / Company Name
+        <input name="brandName" maxlength="60" placeholder="Your company name" />
+      </label>
+      <label>Logo <small>(PNG, JPG, SVG, WEBP or GIF &middot; max 2 MB)</small>
+        <div class="logo-row">
+          <div class="logo-preview" id="logo-preview">No logo</div>
+          <div class="logo-actions">
+            <input type="file" name="logo" accept="image/png,image/jpeg,image/svg+xml,image/webp,image/gif" />
+            <button type="button" id="remove-logo" class="btn btn-light">Remove Logo</button>
+          </div>
+        </div>
+      </label>
+      <div class="form-actions">
+        <button type="submit" class="btn">Save Branding</button>
+        <span id="branding-message" class="message"></span>
+      </div>
+    </form>
+
+    <section class="info">
+      <h3>How it works</h3>
+      <p>Credentials are saved to <code>config/credentials.json</code> on your machine and used immediately
+        for all Flight and Hotel requests. The secret is never sent back to the browser.
+        Branding is saved to <code>config/branding/</code> and shown across all pages.</p>
+    </section>
+  </main>
+
+  <footer>Powered by EndFare Tour &amp; Travel's API</footer>
+  <script src="brand.js"></script>
+  <script src="settings.js"></script>
+</body>
+</html>

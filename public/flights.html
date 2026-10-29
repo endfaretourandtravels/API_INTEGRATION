@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flights | EndFare Tour &amp; Travel's API Demo</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <header class="navbar">
+    <a href="index.html" class="brand">
+      <img class="brand-logo" alt="Logo" hidden />
+      <span class="brand-icon">✈</span>
+      <span class="brand-name">EndFare Tour &amp; Travel's</span>
+      <span class="brand-sub">API Demo</span>
+    </a>
+    <nav>
+      <a href="settings.html" class="settings-link" title="Settings" aria-label="Settings">⚙️</a>
+      <a href="index.html">Home</a>
+      <a href="flights.html" class="active">Flights</a>
+      <a href="hotels.html">Hotels</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1 class="page-title">Flight Search</h1>
+    <form id="search-form" class="search-form" data-kind="flight" data-endpoint="/api/flight/search">
+      <label>From<input name="Source" value="DEL" maxlength="3" required /></label>
+      <label>To<input name="Destination" value="BOM" maxlength="3" required /></label>
+      <label>Journey date<input type="date" name="JourneyDate" value="2026-12-10" required /></label>
+      <label>Adults<input type="number" name="Adults" value="1" min="1" max="9" data-type="number" /></label>
+      <label>Children<input type="number" name="Children" value="0" min="0" max="9" data-type="number" /></label>
+      <label>Infants<input type="number" name="Infants" value="0" min="0" max="9" data-type="number" /></label>
+      <label>Travel class
+        <select name="TravelClass">
+          <option>Economy</option>
+          <option>PremiumEconomy</option>
+          <option>Business</option>
+          <option>First</option>
+        </select>
+      </label>
+      <label>Student fare
+        <select name="IsStudent" data-type="boolean">
+          <option value="false" selected>No</option>
+          <option value="true">Yes</option>
+        </select>
+      </label>
+      <input type="hidden" name="TripType" value="D" />
+      <input type="hidden" name="FlightType" value="1" />
+      <button type="submit" class="btn">Search Flights</button>
+      <label class="testing-toggle" for="testing-mode">
+        <span class="testing-toggle-copy">
+          <strong>Testing mode</strong>
+          <small>Send this search as a test request</small>
+        </span>
+        <span class="toggle-control">
+          <input id="testing-mode" type="checkbox" name="IsTesting" value="true" data-type="checkbox-boolean" checked />
+          <span class="toggle-track" aria-hidden="true"></span>
+          <span class="toggle-state" aria-hidden="true"></span>
+        </span>
+      </label>
+    </form>
+
+    <div id="search-loading" class="search-loading" role="status" aria-live="polite" hidden>
+      <span class="loading-spinner" aria-hidden="true"></span>
+      <span>Searching flights…</span>
+    </div>
+
+    <section class="results">
+      <div class="panel">
+        <h3>Request</h3>
+        <pre id="request-view">—</pre>
+      </div>
+      <div class="panel">
+        <h3>Response <span id="status" class="status"></span></h3>
+        <p id="flight-summary" class="flight-summary">Submit the form to call the API.</p>
+        <div id="flight-results" class="flight-results" aria-live="polite"></div>
+        <details class="raw-response">
+          <summary>Raw API response</summary>
+          <pre id="response-view">Submit the form to call the API.</pre>
+        </details>
+      </div>
+    </section>
+
+    <section id="booking-section" class="booking-section" hidden>
+      <button id="back-to-flights" type="button" class="btn btn-light booking-back">← Back to flights</button>
+      <h2 class="page-title">Passenger details</h2>
+      <div class="booking-layout">
+        <div>
+          <section class="panel selected-itinerary">
+            <h3>Selected itinerary</h3>
+            <div id="selected-itinerary"></div>
+          </section>
+          <form id="passenger-form" class="passenger-form">
+            <div id="passenger-fields"></div>
+            <p id="booking-disclaimer" class="booking-disclaimer" hidden>Demo only: passenger details are not submitted to a booking API.</p>
+            <button class="btn" type="submit">Continue Booking</button>
+            <p id="passenger-message" class="message" role="status" hidden></p>
+          </form>
+        </div>
+        <aside class="panel fare-summary">
+          <h3>Fare summary</h3>
+          <div id="selected-fare" class="selected-fare">—</div>
+          <div id="fare-breakdown" class="fare-breakdown"></div>
+          <div id="fare-loading" class="fare-loading" role="status" aria-live="polite" hidden>
+            <span class="loading-spinner" aria-hidden="true"></span>
+            <span>Checking current fare…</span>
+          </div>
+          <p id="fare-error" class="fare-error" role="alert" hidden></p>
+          <p id="fare-note" class="fare-note">Current fare will be requested for the selected itinerary.</p>
+          <div id="fare-extras" class="fare-extras"></div>
+          <details id="fare-rules-details" class="fare-rules-details" hidden>
+            <summary>Fare rules</summary>
+            <p id="fare-rules"></p>
+          </details>
+          <details id="fare-response-details" class="fare-response-details" hidden>
+            <summary>Fare quote response</summary>
+            <pre id="fare-response"></pre>
+          </details>
+        </aside>
+      </div>
+      <section id="ticket-section" class="ticket-section" hidden aria-live="polite">
+        <div id="pnr-loading" class="ticket-state" role="status" hidden>
+          <span class="loading-spinner" aria-hidden="true"></span>
+          <span>Issuing ticket and generating PNR…</span>
+        </div>
+        <p id="pnr-error" class="fare-error" role="alert" hidden></p>
+        <article id="booking-ticket" class="booking-ticket" hidden>
+          <h2 id="ticket-congratulations" class="ticket-congratulations">Congratulations! Your Flight Ticket is Confirmed</h2>
+          <header class="ticket-header">
+            <div class="ticket-brand">
+              <strong>End<span>Fare</span></strong>
+              <small>Your Journey, Our Priority</small>
+            </div>
+            <h3>✈ Flight Booking Confirmation</h3>
+          </header>
+
+          <div class="ticket-summary">
+            <div>
+              <span>PNR Number</span>
+              <strong id="ticket-pnr">—</strong>
+            </div>
+            <div>
+              <span>Booking ID</span>
+              <strong id="ticket-booking-id">—</strong>
+            </div>
+            <div>
+              <span>Booking Date</span>
+              <strong id="ticket-booking-date">—</strong>
+            </div>
+            <div>
+              <span>Airline</span>
+              <strong id="ticket-airline">—</strong>
+            </div>
+            <div>
+              <span>Booking Status</span>
+              <strong id="ticket-status" class="ticket-confirmed">—</strong>
+            </div>
+          </div>
+
+          <div class="ticket-section-title">✈ Flight Details</div>
+          <div id="ticket-flight-details" class="ticket-flight-details"></div>
+
+          <div class="ticket-body">
+            <div>
+              <div class="ticket-section-title">♟ Passenger Details</div>
+              <div class="ticket-passenger-table-wrap">
+                <table class="ticket-passenger-table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Passenger Name</th>
+                      <th>Age</th>
+                      <th>Gender</th>
+                      <th>Seat No.</th>
+                      <th>Ticket No.</th>
+                    </tr>
+                  </thead>
+                  <tbody id="ticket-passengers"></tbody>
+                </table>
+              </div>
+              <div class="ticket-amenities">
+                <div><span>Baggage Allowance</span><strong id="ticket-baggage">See fare conditions</strong></div>
+                <div><span>Class</span><strong id="ticket-class">—</strong></div>
+                <div><span>Meal</span><strong id="ticket-meal">Not included</strong></div>
+              </div>
+            </div>
+            <aside class="ticket-payment">
+              <span>Total Amount Paid</span>
+              <strong id="ticket-total">—</strong>
+              <small>Including taxes and fees</small>
+              <hr />
+              <span>Payment Mode</span>
+              <strong>Not provided</strong>
+            </aside>
+          </div>
+
+          <footer class="ticket-footer">
+            <strong>Thank you for choosing EndFare Tour &amp; Travels!</strong>
+            <span>For assistance, contact sales@endfare.com</span>
+          </footer>
+          <details class="fare-response-details">
+            <summary>Issue Ticket response</summary>
+            <pre id="pnr-response"></pre>
+          </details>
+        </article>
+      </section>
+    </section>
+
+    <section id="booking-review" class="booking-section" hidden>
+      <button id="edit-passengers" type="button" class="btn btn-light booking-back">← Back to passenger details</button>
+      <h2 class="page-title">Booking review</h2>
+      <div class="booking-layout">
+        <div>
+          <section class="panel">
+            <h3>Selected flight</h3>
+            <div id="review-itinerary"></div>
+          </section>
+          <section class="panel review-passengers">
+            <h3>Passenger details</h3>
+            <div id="review-passengers"></div>
+          </section>
+          <div id="issue-ticket-actions" class="issue-ticket-actions" hidden>
+            <button id="issue-ticket" type="button" class="btn">Issue Ticket</button>
+            <p>Generate the PNR and issue the booking confirmation ticket.</p>
+          </div>
+        </div>
+        <aside class="panel fare-summary final-fare-summary">
+          <h3>Final fare</h3>
+          <div id="final-fare" class="selected-fare">Pending</div>
+          <div id="final-fare-loading" class="fare-loading" role="status" aria-live="polite" hidden>
+            <span class="loading-spinner" aria-hidden="true"></span>
+            <span>Validating final fare…</span>
+          </div>
+          <p id="final-fare-error" class="fare-error" role="alert" hidden></p>
+          <p id="final-fare-note" class="fare-note">The final fare will be validated when you continue booking.</p>
+          <div id="final-fare-breakdown" class="fare-breakdown"></div>
+          <div id="final-fare-validation-details" class="fare-extras"></div>
+          <div class="current-quote">
+            <span>Booking ID</span>
+            <strong id="final-fare-booking-id">Pending</strong>
+          </div>
+          <div class="current-quote">
+            <span>PNR / API reference</span>
+            <strong id="final-fare-api-reference">Pending</strong>
+          </div>
+          <div class="current-quote">
+            <span>Current fare quote</span>
+            <strong id="review-quoted-fare">Not available</strong>
+          </div>
+          <details id="final-fare-response-details" class="fare-response-details" hidden>
+            <summary>Final fare response</summary>
+            <pre id="final-fare-response"></pre>
+          </details>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer>Powered by EndFare Tour &amp; Travel's API</footer>
+  <script src="brand.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>

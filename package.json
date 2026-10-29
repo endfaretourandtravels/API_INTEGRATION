@@ -1,0 +1,21 @@
+{
+  "name": "endfare-api-example",
+  "version": "1.0.0",
+  "description": "Sample project demonstrating the Endfare Flight and Hotel APIs",
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "node scripts/build.js && node server.js",
+    "start": "node server.js",
+    "package": "node scripts/package.js",
+    "flight": "node examples/flight-search.js",
+    "hotel": "node examples/hotel-search.js"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2",
+    "postject": "^1.0.0-alpha.6",
+    "rcedit": "^5.0.2"
+  }
+}
