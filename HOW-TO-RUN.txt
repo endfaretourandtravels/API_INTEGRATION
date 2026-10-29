@@ -1,0 +1,109 @@
+EndFare Tour & Travel's API Demo
+================================
+
+The EndFareDemo.exe file is a generated release file and is not included in
+the GitHub repository. You can run the application directly from its source
+code by following the instructions below.
+
+REQUIRED SOFTWARE
+-----------------
+1. Node.js version 18 or newer:
+   https://nodejs.org/
+
+   npm is installed automatically with Node.js.
+
+2. A modern web browser, such as:
+   - Google Chrome
+   - Microsoft Edge
+   - Mozilla Firefox
+
+3. An internet connection.
+
+4. An EndFare Client ID and Client Secret for performing API searches.
+
+DOWNLOAD FROM GITHUB
+--------------------
+1. Open the project repository on GitHub.
+2. Click "Code", then click "Download ZIP".
+3. Extract the downloaded ZIP file.
+4. Open the extracted project folder. It must contain package.json.
+
+You can also download the project with Git:
+
+  git clone <repository-url>
+
+FIRST-TIME INSTALLATION
+-----------------------
+1. Install Node.js 18 or newer from https://nodejs.org/.
+2. Open Command Prompt or PowerShell in the project folder.
+3. Confirm that Node.js and npm are installed:
+
+     node --version
+     npm --version
+
+4. Install the project dependencies:
+
+     npm install
+
+5. Build and start the application:
+
+     npm run build
+
+6. Wait until the terminal displays a message similar to:
+
+     Running at http://localhost:3000
+
+7. Open the displayed address in your browser:
+
+     http://localhost:3000
+
+   If port 3000 is already being used, the application automatically tries
+   the next available port. Always use the address displayed in the terminal.
+
+FIRST-TIME SETUP
+----------------
+1. Click the gear icon (Settings) at the top-right.
+2. Enter the API base URL, Client ID, and Client Secret.
+3. Click "Save Credentials".
+4. Optional: enter your company name and upload your logo, then click
+   "Save Branding".
+5. Go to Flights or Hotels and try a search.
+
+HOW TO RUN IT LATER
+-------------------
+1. Open Command Prompt or PowerShell in the project folder.
+2. Start the application:
+
+     npm start
+
+3. Open the address displayed in the terminal.
+
+HOW TO STOP THE APPLICATION
+---------------------------
+Return to the terminal and press Ctrl+C.
+
+YOUR DATA AND SECURITY
+----------------------
+Credentials and branding are stored locally in the config folder. The
+credentials.json file is excluded from Git and must never be uploaded or
+committed to GitHub.
+
+TROUBLESHOOTING
+---------------
+"node" or "npm" is not recognized:
+  Install Node.js 18 or newer, close the terminal, and open a new terminal.
+
+"dist/ not found":
+  Run npm run build before using npm start.
+
+The page does not open:
+  Keep the terminal running and manually open the exact localhost address
+  displayed in the terminal.
+
+API searches fail:
+  Open Settings and verify the API base URL, Client ID, Client Secret, and
+  internet connection.
+
+Port 3000 is already in use:
+  The application tries ports 3001 through 3020 automatically. Open the
+  address displayed in the terminal.
