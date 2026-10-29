@@ -1,7 +1,7 @@
 # API_INTEGRATION
 Build your network and platform using EndFare Tour &amp; Travels ready made travel services with a single integration.
 # ✈️ EndFare™ Tour & Travels API
-> **Your Journey, Our Priority.** A modern, high-performance REST API ecosystem designed for travel agents, aggregators, and enterprise platforms.
+> **Your Journey, Our Priority.** A modern, high-performance REST **JSON** based API ecosystem designed for travel agents, aggregators, and enterprise platforms.
 [![API Status]](https://b2b.endfare.com)
 ---
 
